@@ -1,0 +1,37 @@
+{
+  "compilerOptions": {
+    "strictNullChecks": false,
+    "noImplicitAny": false,
+    "module": "CommonJS",
+    "target": "ES5",
+    "allowJs": false,
+    "experimentalDecorators": true,
+    "noImplicitThis": true,
+    "noImplicitReturns": true,
+    "alwaysStrict": false,
+    "inlineSourceMap": true,
+    "inlineSources": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "strict": false,
+    "removeComments": true,
+    "pretty": true,
+    "strictPropertyInitialization": false,
+    "lib": ["es5", "ESNext"],
+    "typeRoots": [
+      "./typings"
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "@vant/weapp/*": ["./node_modules/@vant/weapp/dist/*"]
+    }
+  },
+  "include": [
+    "./**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "$node_modules"
+  ]
+}
