@@ -137,6 +137,8 @@ const getUserInfo = async () => {
       wx.setStorageSync("userInfo", JSON.stringify(userInfo));
       return userInfo;
     }
+  } else {
+    return null;
   }
 };
 
