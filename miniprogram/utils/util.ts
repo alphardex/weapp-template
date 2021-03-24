@@ -15,7 +15,11 @@ const formatTime = (date: Date) => {
   const hour = date.getHours();
   const minute = date.getMinutes();
   const second = date.getSeconds();
-  return [year, month, day].map(formatNumber).join("/") + " " + [hour, minute, second].map(formatNumber).join(":");
+  return (
+    [year, month, day].map(formatNumber).join("/") +
+    " " +
+    [hour, minute, second].map(formatNumber).join(":")
+  );
 };
 
 // 返回上一页
@@ -33,7 +37,10 @@ const goBack = (delta: number) => {
 };
 
 // 自定义弹窗
-const showModal = async (content: string, confirmText = "好的"): Promise<any> => {
+const showModal = async (
+  content: string,
+  confirmText = "好的"
+): Promise<any> => {
   const res = await wxp.showModal({
     title: "提示",
     content,
@@ -89,7 +96,8 @@ const get = ky.partial(request, "get");
 const post = (url: string, data): any => request("post", url, data, "formData");
 
 // 显示加载
-const showLoading = (title = "加载中", mask = true) => wx.showLoading({ title, mask });
+const showLoading = (title = "加载中", mask = true) =>
+  wx.showLoading({ title, mask });
 
 // 停止加载
 const hideLoading = () => wx.hideLoading();
@@ -155,7 +163,8 @@ const saveImageToPhotosAlbum = async (src: string) => {
 };
 
 // 富文本图片自适应
-const richTextImgAuto = (content: string) => content.replace(/\<img/gi, '<img style="max-width: 100%;"');
+const richTextImgAuto = (content: string) =>
+  content.replace(/\<img/gi, '<img style="max-width: 100%;"');
 
 export {
   formatTime,
