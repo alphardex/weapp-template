@@ -11,7 +11,7 @@
   "license": "",
   "dependencies": {
     "@vant/weapp": "^1.5.2",
-    "kyouka": "^1.2.4",
+    "kyouka": "^1.2.5",
     "miniprogram-api-promise": "^1.0.4",
     "we-validator": "^2.1.11"
   },
