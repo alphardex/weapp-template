@@ -11,7 +11,8 @@ view {
 
 // utils
 
-$colors: "red", "orange", "yellow", "green", "blue", "brown", "black", "white";
+$colors: "red", "orange", "yellow", "green", "blue", "brown", "black", "white",
+  "purple";
 @each $c in $colors {
   @for $i from 1 through 8 {
     .text-#{$c}-#{$i} {

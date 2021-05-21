@@ -14466,6 +14466,102 @@ view {
   border-color: var(--white-color-8);
 }
 
+.text-purple-1 {
+  color: var(--purple-color-1);
+}
+
+.bg-purple-1 {
+  background: var(--purple-color-1);
+}
+
+.border-purple-1 {
+  border-color: var(--purple-color-1);
+}
+
+.text-purple-2 {
+  color: var(--purple-color-2);
+}
+
+.bg-purple-2 {
+  background: var(--purple-color-2);
+}
+
+.border-purple-2 {
+  border-color: var(--purple-color-2);
+}
+
+.text-purple-3 {
+  color: var(--purple-color-3);
+}
+
+.bg-purple-3 {
+  background: var(--purple-color-3);
+}
+
+.border-purple-3 {
+  border-color: var(--purple-color-3);
+}
+
+.text-purple-4 {
+  color: var(--purple-color-4);
+}
+
+.bg-purple-4 {
+  background: var(--purple-color-4);
+}
+
+.border-purple-4 {
+  border-color: var(--purple-color-4);
+}
+
+.text-purple-5 {
+  color: var(--purple-color-5);
+}
+
+.bg-purple-5 {
+  background: var(--purple-color-5);
+}
+
+.border-purple-5 {
+  border-color: var(--purple-color-5);
+}
+
+.text-purple-6 {
+  color: var(--purple-color-6);
+}
+
+.bg-purple-6 {
+  background: var(--purple-color-6);
+}
+
+.border-purple-6 {
+  border-color: var(--purple-color-6);
+}
+
+.text-purple-7 {
+  color: var(--purple-color-7);
+}
+
+.bg-purple-7 {
+  background: var(--purple-color-7);
+}
+
+.border-purple-7 {
+  border-color: var(--purple-color-7);
+}
+
+.text-purple-8 {
+  color: var(--purple-color-8);
+}
+
+.bg-purple-8 {
+  background: var(--purple-color-8);
+}
+
+.border-purple-8 {
+  border-color: var(--purple-color-8);
+}
+
 .form-control {
   --input-padding: 0 0 0 24rpx;
   font-size: 27rpx;
