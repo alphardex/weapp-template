@@ -1,5 +1,6 @@
 import wxp from "../app";
 import ky from "kyouka";
+import { API } from "../consts/index";
 
 // 数字补零
 const formatNumber = (n: number) => {
@@ -81,7 +82,11 @@ const request = (method, url: string, data, dataType = "json") =>
         if (code !== 200) {
           wx.reportMonitor("1", code);
         }
-        resolve(res.data);
+        if (method === "get") {
+          resolve(res.data.data);
+        } else {
+          resolve(res.data);
+        }
       })
       .catch((res) => {
         wx.reportMonitor("0", 1);
@@ -150,6 +155,24 @@ const getUserInfo = async () => {
   }
 };
 
+// 获取OpenID（优先从缓存获取）
+const getOpenID = async () => {
+  const openidCache = wx.getStorageSync("openid");
+  if (openidCache) {
+    return openidCache;
+  } else {
+    const res1 = await wxp.login();
+    const code = res1.code;
+    if (code) {
+      const res2 = await get(API.openID, { code });
+      const { openid, session_key } = res2;
+      wx.setStorageSync("openid", openid);
+      wx.setStorageSync("session_key", session_key);
+      return openid;
+    }
+  }
+};
+
 // 将图片保存至相册
 const saveImageToPhotosAlbum = async (src: string) => {
   const res1 = await wxp.getImageInfo({
@@ -183,6 +206,7 @@ export {
   isUserLogin,
   isUserInfoAuth,
   getUserInfo,
+  getOpenID,
   saveImageToPhotosAlbum,
   richTextImgAuto,
 };

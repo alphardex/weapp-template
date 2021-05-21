@@ -1,1 +1,54 @@
 @import "./aqua.weapp.min.wxss";
+
+page {
+}
+
+// reset
+
+view {
+  border-width: 0;
+}
+
+// utils
+
+$colors: "red", "orange", "yellow", "green", "blue", "brown", "black", "white";
+@each $c in $colors {
+  @for $i from 1 through 8 {
+    .text-#{$c}-#{$i} {
+      color: var(--#{$c}-color-#{$i});
+    }
+
+    .bg-#{$c}-#{$i} {
+      background: var(--#{$c}-color-#{$i});
+    }
+
+    .border-#{$c}-#{$i} {
+      border-color: var(--#{$c}-color-#{$i});
+    }
+  }
+}
+
+// common
+
+.form-control {
+  --input-padding: 0 0 0 24rpx;
+
+  font-size: 27rpx;
+  height: 72rpx;
+}
+
+textarea.form-control {
+  --input-padding: 12rpx 0 0 12rpx;
+
+  height: 218rpx;
+}
+
+// vant
+
+.van-popup {
+  --dialog-background-color: transparent;
+}
+
+.van-hairline--top {
+  display: none !important;
+}
