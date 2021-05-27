@@ -1,8 +1,7 @@
 const HOST = "";
 
 const API = {
-  openID: "p=api/getOpenid",
-  decryptData: "p=api/decryptData",
+  login: "/api/v1/wxmp/login",
 };
 
 Object.entries(API).forEach(([key, value]) => {

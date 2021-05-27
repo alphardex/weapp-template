@@ -1,6 +1,12 @@
 import wxp from "../app";
-import ky from "kyouka";
 import { API } from "../consts/index";
+import ky from "kyouka";
+
+const QQMapWX = require("../libs/qqmap-wx-jssdk.min.js");
+
+const qqmapsdk = new QQMapWX({
+  key: "X3JBZ-PWQCU-EFUVJ-2N44L-MWI76-YJFKD",
+});
 
 // 数字补零
 const formatNumber = (n: number) => {
@@ -58,7 +64,7 @@ const showMessage = (title: string) => wx.showToast({ icon: "none", title });
 const showSuccess = (title: string) => wx.showToast({ icon: "success", title });
 
 // 发送请求
-const request = (method, url: string, data, dataType = "json") =>
+const request = (method, url: string, data, dataType = "json", header = {}) =>
   new Promise((resolve, reject) => {
     const dataTypeMap = {
       json: "application/json",
@@ -75,6 +81,7 @@ const request = (method, url: string, data, dataType = "json") =>
           "cache-control": "no-cache,must-revalidate",
           Pragma: "no-cache",
           Expires: "-1",
+          ...header,
         },
       })
       .then((res) => {
@@ -95,10 +102,12 @@ const request = (method, url: string, data, dataType = "json") =>
   });
 
 // 发送get请求
-const get = ky.partial(request, "get");
+const get = (url: string, data = {}, header = {}): any =>
+  request("get", url, data, "json", header);
 
 // 发送post请求
-const post = (url: string, data): any => request("post", url, data, "formData");
+const post = (url: string, data, header = {}): any =>
+  request("post", url, data, "formData", header);
 
 // 显示加载
 const showLoading = (title = "加载中", mask = true) =>
@@ -113,22 +122,11 @@ const stopPullDownRefresh = () => {
   wx.stopPullDownRefresh();
 };
 
-// 获取屏幕除导航的内部高度，常用于设置满屏scroll-view的高度
-const getInnerHeight = async (navBarComponent) => {
-  const { height } = navBarComponent.data;
-  const { windowHeight } = await wxp.getSystemInfo();
-  const innerHeight = windowHeight - height;
-  return { innerHeight, navBarHeight: height };
-};
-
 // 滚动到页面顶部
 const scrollToTop = (scrollTop = 0) =>
   wx.pageScrollTo({
     scrollTop,
   });
-
-// 判断用户是否是登录状态
-const isUserLogin = () => !!wx.getStorageSync("userInfo");
 
 // 判断用户是否已授权用户信息
 const isUserInfoAuth = async () => {
@@ -145,7 +143,8 @@ const getUserInfo = async () => {
     if (userInfoCache) {
       return JSON.parse(userInfoCache);
     } else {
-      const res = await wxp.getUserInfo();
+      // @ts-ignore
+      const res = await wx.getUserProfile({ desc: "进行问题提报" });
       const userInfo = res.userInfo;
       wx.setStorageSync("userInfo", JSON.stringify(userInfo));
       return userInfo;
@@ -155,20 +154,23 @@ const getUserInfo = async () => {
   }
 };
 
-// 获取OpenID（优先从缓存获取）
-const getOpenID = async () => {
-  const openidCache = wx.getStorageSync("openid");
-  if (openidCache) {
-    return openidCache;
+// 获取登录token（优先从缓存获取）
+const getToken = async () => {
+  const tokenCache = wx.getStorageSync("token");
+  const now = new Date();
+  const expireDate = ky.fromTimestamp(wx.getStorageSync("expire"));
+  // 有缓存且没过期才会取，不然重新获取
+  if (tokenCache && now < expireDate) {
+    return tokenCache;
   } else {
     const res1 = await wxp.login();
     const code = res1.code;
     if (code) {
-      const res2 = await get(API.openID, { code });
-      const { openid, session_key } = res2;
-      wx.setStorageSync("openid", openid);
-      wx.setStorageSync("session_key", session_key);
-      return openid;
+      const res2 = await post(API.login, { code });
+      const { token, expire } = res2.data;
+      wx.setStorageSync("token", token);
+      wx.setStorageSync("expire", expire);
+      return token;
     }
   }
 };
@@ -189,6 +191,33 @@ const saveImageToPhotosAlbum = async (src: string) => {
 const richTextImgAuto = (content: string) =>
   content.replace(/\<img/gi, '<img style="max-width: 100%;"');
 
+// 响应成功
+const isOk = (res: any) => Number(res.code) === 200;
+
+// 根据经纬返回坐标信息
+const getLocationByCoord = ({ latitude = 0, longitude = 0 }, cb: Function) => {
+  qqmapsdk.reverseGeocoder({
+    location: {
+      latitude,
+      longitude,
+    },
+    success(location) {
+      cb(location);
+    },
+    fail(res) {
+      console.log(res);
+    },
+  });
+};
+
+// 将图片转化为base64
+const convertImgToBase64 = (path: string, format = "jpg") => {
+  const fileManager = wx.getFileSystemManager();
+  const base64 = fileManager.readFileSync(path, "base64");
+  const base64Str = `data:image/${format};base64,${base64}`;
+  return base64Str;
+};
+
 export {
   formatTime,
   goBack,
@@ -201,12 +230,13 @@ export {
   showLoading,
   hideLoading,
   stopPullDownRefresh,
-  getInnerHeight,
   scrollToTop,
-  isUserLogin,
   isUserInfoAuth,
   getUserInfo,
-  getOpenID,
+  getToken,
   saveImageToPhotosAlbum,
   richTextImgAuto,
+  isOk,
+  getLocationByCoord,
+  convertImgToBase64,
 };

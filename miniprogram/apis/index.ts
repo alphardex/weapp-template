@@ -1,7 +1,16 @@
 import { API } from "../consts/index";
-import { get } from "../utils/util";
+import { get, getToken, post } from "../utils/util";
 
-// 解密用户信息
-const getDecryptData = (query: any) => get(API.decryptData, query);
+// 需要登录token的get方法
+const getWithToken = async (url: string, data = {}) => {
+  const token = await getToken();
+  return get(url, data, { token });
+};
 
-export { getDecryptData };
+// 需要登录token的post方法
+const postWithToken = async (url: string, data = {}) => {
+  const token = await getToken();
+  return post(url, data, { token });
+};
+
+export {};
