@@ -1,0 +1,13 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.API = void 0;
+var HOST = "";
+var API = {
+    login: "/api/v1/wxmp/login",
+};
+exports.API = API;
+Object.entries(API).forEach(function (_a) {
+    var key = _a[0], value = _a[1];
+    API[key] = "" + HOST + value;
+});
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJpbmRleC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7QUFBQSxJQUFNLElBQUksR0FBRyxFQUFFLENBQUM7QUFFaEIsSUFBTSxHQUFHLEdBQUc7SUFDVixLQUFLLEVBQUUsb0JBQW9CO0NBQzVCLENBQUM7QUFNTyxrQkFBRztBQUpaLE1BQU0sQ0FBQyxPQUFPLENBQUMsR0FBRyxDQUFDLENBQUMsT0FBTyxDQUFDLFVBQUMsRUFBWTtRQUFYLEdBQUcsUUFBQSxFQUFFLEtBQUssUUFBQTtJQUN0QyxHQUFHLENBQUMsR0FBRyxDQUFDLEdBQUcsS0FBRyxJQUFJLEdBQUcsS0FBTyxDQUFDO0FBQy9CLENBQUMsQ0FBQyxDQUFDIiwic291cmNlc0NvbnRlbnQiOlsiY29uc3QgSE9TVCA9IFwiXCI7XHJcblxyXG5jb25zdCBBUEkgPSB7XHJcbiAgbG9naW46IFwiL2FwaS92MS93eG1wL2xvZ2luXCIsXHJcbn07XHJcblxyXG5PYmplY3QuZW50cmllcyhBUEkpLmZvckVhY2goKFtrZXksIHZhbHVlXSkgPT4ge1xyXG4gIEFQSVtrZXldID0gYCR7SE9TVH0ke3ZhbHVlfWA7XHJcbn0pO1xyXG5cclxuZXhwb3J0IHsgQVBJIH07XHJcbiJdfQ==

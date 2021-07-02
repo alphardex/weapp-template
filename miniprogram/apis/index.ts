@@ -13,4 +13,4 @@ const postWithToken = async (url: string, data = {}) => {
   return post(url, data, { token });
 };
 
-export {};
+export { API, getWithToken, postWithToken };
