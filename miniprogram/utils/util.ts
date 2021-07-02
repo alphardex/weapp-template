@@ -194,19 +194,38 @@ const richTextImgAuto = (content: string) =>
 // 响应成功
 const isOk = (res: any) => Number(res.code) === 200;
 
-// 根据经纬返回坐标信息
-const getLocationByCoord = ({ latitude = 0, longitude = 0 }, cb: Function) => {
-  qqmapsdk.reverseGeocoder({
-    location: {
-      latitude,
-      longitude,
-    },
-    success(location) {
-      cb(location);
-    },
-    fail(res) {
-      console.log(res);
-    },
+// 获取当前坐标
+const getCoord = (type = "gcj02") => {
+  return new Promise((resolve) => {
+    wx.getLocation({
+      type,
+      success(res) {
+        resolve(res);
+      },
+      fail() {
+        showMessage("获取位置信息失败");
+        resolve(null);
+      },
+    });
+  });
+};
+
+// 根据经纬坐标解出位置信息
+const getLocationByCoord = ({ latitude = 0, longitude = 0 }) => {
+  return new Promise((resolve) => {
+    qqmapsdk.reverseGeocoder({
+      location: {
+        latitude,
+        longitude,
+      },
+      success(location) {
+        resolve(location);
+      },
+      fail(res) {
+        console.log(res);
+        resolve(null);
+      },
+    });
   });
 };
 
@@ -272,6 +291,7 @@ export {
   saveImageToPhotosAlbum,
   richTextImgAuto,
   isOk,
+  getCoord,
   getLocationByCoord,
   convertImgToBase64,
   scanQrCode,
