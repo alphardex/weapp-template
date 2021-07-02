@@ -250,6 +250,9 @@ const copyToClipboard = (text: string, title = "复制成功") => {
   });
 };
 
+// 是否URL
+const isUrl = (url: string) => /^http(s)?/.test(url);
+
 export {
   formatTime,
   goBack,
@@ -273,4 +276,5 @@ export {
   convertImgToBase64,
   scanQrCode,
   copyToClipboard,
+  isUrl,
 };
