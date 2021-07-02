@@ -240,6 +240,16 @@ const scanQrCode = () => {
   });
 };
 
+// 拷贝至剪贴板
+const copyToClipboard = (text: string, title = "复制成功") => {
+  wx.setClipboardData({
+    data: text,
+    success() {
+      showMessage(title);
+    },
+  });
+};
+
 export {
   formatTime,
   goBack,
@@ -262,4 +272,5 @@ export {
   getLocationByCoord,
   convertImgToBase64,
   scanQrCode,
+  copyToClipboard,
 };
