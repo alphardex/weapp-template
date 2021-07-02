@@ -218,6 +218,24 @@ const convertImgToBase64 = (path: string, format = "jpg") => {
   return base64Str;
 };
 
+// 扫描二维码
+const scanQrCode = (cb: Function) => {
+  showLoading("二维码解析中");
+  wx.scanCode({
+    success(res) {
+      hideLoading();
+      if (res.errMsg === "scanCode:ok") {
+        cb(res.result);
+      } else {
+        showMessage("扫描失败");
+      }
+    },
+    fail() {
+      hideLoading();
+    },
+  });
+};
+
 export {
   formatTime,
   goBack,
@@ -239,4 +257,5 @@ export {
   isOk,
   getLocationByCoord,
   convertImgToBase64,
+  scanQrCode,
 };

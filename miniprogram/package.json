@@ -11,6 +11,7 @@
   "license": "",
   "dependencies": {
     "@vant/weapp": "^1.5.2",
+    "js-base64": "^3.6.1",
     "kyouka": "^1.2.6",
     "miniprogram-api-promise": "^1.0.4",
     "we-validator": "^2.1.11"
