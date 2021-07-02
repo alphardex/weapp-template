@@ -220,6 +220,7 @@ const convertImgToBase64 = (path: string, format = "jpg") => {
 
 // 扫描二维码
 const scanQrCode = () => {
+  showLoading("扫描二维码中");
   return new Promise((resolve) => {
     wx.scanCode({
       success(res) {
