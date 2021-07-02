@@ -219,20 +219,23 @@ const convertImgToBase64 = (path: string, format = "jpg") => {
 };
 
 // 扫描二维码
-const scanQrCode = (cb: Function) => {
-  showLoading("二维码解析中");
-  wx.scanCode({
-    success(res) {
-      hideLoading();
-      if (res.errMsg === "scanCode:ok") {
-        cb(res.result);
-      } else {
-        showMessage("扫描失败");
-      }
-    },
-    fail() {
-      hideLoading();
-    },
+const scanQrCode = () => {
+  return new Promise((resolve) => {
+    wx.scanCode({
+      success(res) {
+        hideLoading();
+        if (res.errMsg === "scanCode:ok") {
+          resolve(res.result);
+        } else {
+          showMessage("扫描失败");
+          resolve(null);
+        }
+      },
+      fail() {
+        hideLoading();
+        resolve(null);
+      },
+    });
   });
 };
 
